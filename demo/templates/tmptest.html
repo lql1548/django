@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{ name }} <br>
+{{ age }} <br>
+{{ hobby }} <br>
+{{ score }} <br>
+<hr>
+{{ age | add:4 }}
+{{ name | capfirst }}
+{{ name | upper }}
+{{ name | lower }}
+{{ name1 | default:"xxxx" }}
+{{ now_time | date:"Y-m-d H:i:s"}}
+{{ name | cut:"l" }}
+{{ js | safe }}
+
+<h2>if判断</h2>
+{% if age < 18 %}
+    未成年
+{% elif age > 18 %}
+    成年
+{% else %}
+    在成年的路上
+{% endif %} <br>
+
+<h2>循环列表</h2>
+{% for one in hobby %}
+    {{ one }} <br>
+{% endfor %}  <br>
+
+<h2>循环字典</h2>
+{% for key,value in score.items %}
+    {{ key }}:{{ value }} <br>
+{% endfor %}
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/1.css">
+</head>
+<body>
+
+
+<ol>
+    {% for foo in urldata %}
+    <li>
+        {{ foo.img }}
+        {{ foo.name }}
+    </li>
+
+{% endfor %}
+</ol>
+
+
+</body>
+</html>

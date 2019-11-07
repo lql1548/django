@@ -1,0 +1,10 @@
+.box {
+    width: 150px;
+    height: 150px;
+    text-align: center;
+}
+
+.item {
+    width: 100px;
+    height: 100px;
+}
