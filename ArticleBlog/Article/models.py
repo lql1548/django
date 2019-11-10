@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 GENDER_LIST = (
@@ -23,8 +24,10 @@ class Type(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=32)
     date = models.DateField(auto_now=True)
-    content = models.TextField()
-    description = models.TextField()
+    # content = models.TextField()
+    content = RichTextField()
+    # description = models.TextField()
+    description = RichTextField()
     # 图片
     # upload_to 指定图片上传到  /static/images 目录下
     picture = models.ImageField(upload_to="images")
