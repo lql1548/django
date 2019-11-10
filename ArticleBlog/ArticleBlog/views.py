@@ -5,8 +5,23 @@ from django.core.paginator import Paginator
 
 def about(request):
     return render(request,"about.html")
+
 def index(request):
-    return render(request,"index.html")
+    """
+    返回  最新的  6条数据
+    返回图文推荐  7条数据
+    返回点击排行  12条数据
+
+    :param request:
+    :return:
+    """
+    newarticle = Article.objects.order_by("-date")[:6]
+    # 返回图文推荐  7条数据
+    recommendArticle = Article.objects.filter(recommend=1)[:7]
+    # 返回点击率
+    clickArticle = Article.objects.order_by("-click")[:12]
+
+    return render(request,"index.html",locals())
 def listpic(request):
     return render(request,"listpic.html")
 
@@ -43,6 +58,8 @@ def base(request):
 def articleDetail(request,id):
     id = int(id)
     article = Article.objects.filter(id=id).first()
+    article.click += 1
+    article.save()
     return render(request,"articleDetail.html",locals())
 
 

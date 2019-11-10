@@ -32,6 +32,9 @@ class Article(models.Model):
     # upload_to 指定图片上传到  /static/images 目录下
     picture = models.ImageField(upload_to="images")
 
+    recommend = models.IntegerField(default=0,verbose_name="推荐")  ## 0代表不推荐  1代表推荐
+    click = models.IntegerField(default=0,verbose_name="点击率")  ## 点击了多少次
+
     author = models.ForeignKey(to=Author,on_delete=models.CASCADE)
     type = models.ManyToManyField(to=Type)
     class Meta:
