@@ -27,17 +27,38 @@
         </li>
           {% endfor %}
       </div>
-      <div class="pagelist">页次：1/1 每页25 总数10
-          <a href="/">首页</a>
-          <a href="/">上一页</a>
-          <a href="/">下一页</a>
-          <a href="/">尾页</a>
-      </div>
-{#        <div class="pagelist">#}
-{#            {% for one in page_range %}#}
-{#                {{ one }}#}
-{#            {% endfor %}#}
-{#        </div>#}
+{#      <div class="pagelist">页次：1/1 每页25 总数10#}
+{#          <a href="/">首页</a>#}
+{#          <a href="/">上一页</a>#}
+{#          <a href="/">下一页</a>#}
+{#          <a href="/">尾页</a>#}
+{#      </div>#}
+        <div class="pagelist">
+            {% if number > 1 %}
+                <a href="/newslistpic/1">首页</a>
+            {% endif %}
+
+            {% if page_obj.has_previous %}
+                <a href="/newslistpic/{{ page_obj.previous_page_number }}">上一页</a>
+            {% endif %}
+
+            {% for one in page_range %}
+                {% if one == page_obj.number %}
+                    <a href="/newslistpic/{{ one }}" style="color:red;">{{ one }}</a>
+                {% else %}
+                    <a href="/newslistpic/{{ one }}">{{ one }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="/newslistpic/{{ page_obj.next_page_number }}">下一页</a>
+            {% endif %}
+
+            {% if number < paginator.num_pages %}
+                <a href="/newslistpic/{{ paginator.num_pages }}">尾页</a>
+            {% endif %}
+
+        </div>
 
     </div>
   </div>
