@@ -24,5 +24,9 @@ urlpatterns = [
     path('index/', index),
     path('listpic/', listpic),
     path('newslistpic/', newslistpic),
+    re_path('newslistpic/(?P<page>\d+)/', newslistpic),
     path('base/', base),
+    # path('articleDetail/', articleDetail),
+    re_path('articleDetail/(?P<id>\d+)/', articleDetail),
+    path('fytest/', fytest),
 ]
