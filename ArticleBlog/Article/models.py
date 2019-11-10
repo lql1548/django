@@ -25,6 +25,10 @@ class Article(models.Model):
     date = models.DateField(auto_now=True)
     content = models.TextField()
     description = models.TextField()
+    # 图片
+    # upload_to 指定图片上传到  /static/images 目录下
+    picture = models.ImageField(upload_to="images")
+
     author = models.ForeignKey(to=Author,on_delete=models.CASCADE)
     type = models.ManyToManyField(to=Type)
     class Meta:
