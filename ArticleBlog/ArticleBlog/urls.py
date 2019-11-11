@@ -31,4 +31,6 @@ urlpatterns = [
     path('fytest/', fytest),
     path('ckeditor/', include("ckeditor_uploader.urls")),
     path('requesttest/', requesttest),
+    path('reqtest/', reqtest),
+    path('search/', search),
 ]

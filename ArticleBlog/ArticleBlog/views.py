@@ -100,3 +100,20 @@ def requesttest(request):
     # print(request.META.get("HTTP_REFERER"))  ## 请求的来源
     print(request.META)
     return HttpResponse("请求demo")
+
+def reqtest(request):
+    # 获取get请求的参数
+    data = request.GET
+    print(data)
+    username = request.GET.get("username")
+    print(username)
+    return render(request,"reqtest.html")
+
+
+def search(request):
+    # 获取数据
+    search_key = request.GET.get("searchkey")
+    # 判断是否为空值
+    if search_key:
+        article = Article.objects.filter(title__icontains=search_key).all().values("title")
+    return render(request,"search.html",locals())
