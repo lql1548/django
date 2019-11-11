@@ -30,4 +30,5 @@ urlpatterns = [
     re_path('articleDetail/(?P<id>\d+)/', articleDetail),
     path('fytest/', fytest),
     path('ckeditor/', include("ckeditor_uploader.urls")),
+    path('requesttest/', requesttest),
 ]

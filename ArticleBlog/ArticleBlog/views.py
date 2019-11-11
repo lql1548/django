@@ -80,3 +80,23 @@ def fytest(request):
     #     print(one)
         # print(one.title)
     return HttpResponse("分页")
+
+def requesttest(request):
+    # print(dir(request))
+    # print(request.COOKIES)  ## 用户的身份
+    # print(request.FILES)  ## 请求携带的文件  比如：图片，文档，压缩包
+    # print(request.META)  ## 请求的具体数据，包含所有的http请求信息
+    # print(request.GET)  ## 获取get请求传递的参数
+    # print(request.GET.get("name"))  ## 获取get 请求参数中指定key的value
+    # print(request.POST)  ## 获取post请求传递的参数
+    # print(request.POST.get("name"))  ## 获取post请求传递参数中指定key的value
+    # print(request.scheme)  ## http 或者是  https
+    # print(request.method)  ## 获取请求方式  POST  GET
+    # print(request.path)  ## 请求的路径
+    # print(request.body)  ## 请求的主体，放请求的内容  bytes  类型
+    # print(request.META.get("OS"))  ## 请求来源使用的操作系统
+    # print(request.META.get("HTTP_USER_AGENT"))  ## 浏览器的版本
+    # print(request.META.get("HTTP_HOST"))  ## 请求的主机
+    # print(request.META.get("HTTP_REFERER"))  ## 请求的来源
+    print(request.META)
+    return HttpResponse("请求demo")
