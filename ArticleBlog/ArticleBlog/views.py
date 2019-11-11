@@ -117,3 +117,23 @@ def search(request):
     if search_key:
         article = Article.objects.filter(title__icontains=search_key).all().values("title")
     return render(request,"search.html",locals())
+
+def register(request):
+    # 获取数据
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    # 判断是否为空值
+    if username and password:
+        # 校验用户是否重复
+        flag = User.objects.filter(name=username).exists()
+        if not flag:
+            user = User()
+            user.name = username
+            user.password = password
+            user.save()
+            result = "注册成功"
+        else:
+            result = "用户名已存在"
+    else:
+        result = "用户名或密码为空"
+    return render(request,"register.html",locals())
