@@ -7,13 +7,11 @@
 <body>
 
 <form action="">
-    查询内容:<input type="text" name="searchkey"><br>
-    <input type="submit" value="查找">
+    查询内容：<input type="text" name="searchkey"><br>
+    <input type="submit" value="查询">
 </form>
 
-{% for one in article %}
-    {{ one.title }}<br>
-{% endfor %}
+{{ article }}
 
 </body>
 </html>

@@ -40,6 +40,7 @@ class Article(models.Model):
     class Meta:
         db_table = "article"
 
+
 class User(models.Model):
     name = models.CharField(max_length=32)
     password = models.CharField(max_length=32)

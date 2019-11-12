@@ -33,5 +33,6 @@ urlpatterns = [
     path('requesttest/', requesttest),
     path('reqtest/', reqtest),
     path('search/', search),
+    path('reqpost/', reqpost),
     path('register/', register),
 ]

@@ -2,18 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>注册页面</title>
+    <title>注册</title>
 </head>
 <body>
 
+{#<form action="" method="post">#}
+{#    {% csrf_token %}#}
+{#    用户名：<input type="text" name="uname"><br>#}
+{#    密码：<input type="password" name="pwd"><br>#}
+{#    <input type="submit" value="注册">#}
+{#</form>#}
+{##}
+{#<p style="color: red">{{ result }}</p>#}
+
+<h2>普通的样式</h2>
+{{ register_form }}
+<hr>
+
+<h2>p标签的样式</h2>
+{{ register_form.as_p }}
+<hr>
+
+<h2>ul标签的样式</h2>
+{{ register_form.as_ul }}
+<hr>
+
+<h2>自定义样式</h2>
 <form action="" method="post">
     {% csrf_token %}
-    用户名:<input type="text" name="username"><br>
-    密码:<input type="password" name="password"><br>
+    <table>
+        {% for one in register_form %}
+        <tr>
+            <th>{{ one.label }}</th>
+            <td>{{ one }}</td>
+        </tr>
+        {% endfor %}
+    </table>
     <input type="submit" value="注册">
 </form>
-
-<p style="color: red">{{ result }}</p>
-
 </body>
 </html>
