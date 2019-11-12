@@ -35,4 +35,10 @@ urlpatterns = [
     path('search/', search),
     path('reqpost/', reqpost),
     path('register/', register),
+    path('ajaxtest/', ajaxtest),
+    path('ajaxdemo/', ajaxdemo),
+    path('ajaxreq/', ajaxreq),
+    path('ajaxregister/', ajaxregister),
+    path('ajaxpost/', ajaxpost),
+    path('Article/', include("Article.urls")),
 ]

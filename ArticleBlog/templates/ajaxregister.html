@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax注册</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<input id="username" type="text" name="username" placeholder="用户名"><br>
+<input id="password" type="password" name="password" placeholder="密码"><br>
+<input id="register" type="submit" value="注册">
+<p id="content"></p>
+<script>
+    $("#register").click(
+        function () {
+            // 获取填写的数据
+            var username = $("#username").val();
+            var password = $("#password").val();
+            // 构建请求的url
+            var url="/ajaxpost/";
+            send_data = {
+                "username":username,
+                "password":password,
+                "csrfmiddlewaretoken":"{{ csrf_token }}"
+            }
+            // 发送请求  ajax 请求
+            $.ajax({
+                url:url, // ajax请求要请求的地址
+                type:"post", // 请求方式  get  post
+                data:send_data, // 请求要发送的数据  常在post请求中使用，get请求只需要拼接请求的url就可以
+                success:function (data) {
+                    // 请求成功之后要执行的方法
+                    // data 接收请求成功之后的返回值  json
+                    console.log(data);
+                    $("#content").text(data["msg"]);
+                },
+                error:function (error) {
+                    // 请求失败之后要执行的内容
+                    console.log(error)
+                }
+
+            })
+        }
+    )
+
+
+
+</script>
+
+
+
+</body>
+</html>

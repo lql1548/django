@@ -131,39 +131,25 @@ def setPassword(password):
     return result
 
 from Article.form import UserForm
-# 注册
+# 用户注册
 def register(request):
-    # 获取数据  完成注册功能
-    register_form = UserForm() ## 实例化
     if request.method == "POST":
-        # username = request.POST.get("uname")
-        # username = request.POST.get("name")
-        # password = request.POST.get("password")
-        # 将接收到的数据，进行校验， 数据是否合法
-        # 校验用户名  不能为  admin@126.com
-        # 将获取到的数据  给form表单类
-        data = UserForm(request.POST)
-        if data.is_valid():  ## 判断校验是否成功
-            clean_data = data.cleaned_data  ## 获取经过校验的数据
-            # print(clean_data)
-            username = clean_data.get("name")
-            password = clean_data.get("password")
-            # 判断是否为空值
-            if username and password:
-                # 判断用户名是否重复
-                flag = User.objects.filter(name=username).exists()
-                # 如果用户名不重复，将用户添加到数据库中
-                if not flag:
-                    user = User()
-                    user.name = username
-                    user.password = setPassword(password)
-                    user.save()
-                    result = "注册成功"
-                # 如果用户名重复，提示  用户名已存在
-                else:
-                    result = "用户名已存在"
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        # 判断是否为空值
+        if username and password:
+            flag = User.objects.filter(name=username).first()
+            # 用户不存在
+            if not flag:
+                user = User()
+                user.name = username
+                user.password = setPassword(password)
+                user.save()
+                result = "注册成功"
             else:
-                result = "用户名或密码为空"
+                result = "用户已存在"
+        else:
+            result = "用户名或密码为空"
     return render(request,"register.html",locals())
 
 def reqpost(request):
@@ -175,3 +161,63 @@ def reqpost(request):
         print(username)
         print(password)
     return render(request,"reqpost.html")
+
+
+def ajaxtest(request):
+    return render(request,"ajaxtest.html",locals())
+
+
+# 提供页面
+def ajaxdemo(request):
+    return render(request,"ajaxdemo.html")
+
+from django.http import JsonResponse
+# 处理ajax请求
+def ajaxreq(request):
+    """
+    接收用户的请求   校验用户名  密码
+        参数：  username  password
+    处理请求
+        查询数据库  查看指定用户名密码的用户是否存在
+    返回响应
+        存在或者  不存在
+    :param request:
+    :return:
+    """
+    print(request.GET)
+    username = request.GET.get("username")
+    password = request.GET.get("password")
+    result = {"code":10000,"msg":""}
+    if username and password:
+        flag = User.objects.filter(name=username,password=setPassword(password)).first()
+        if flag:
+            result["msg"]= "存在"
+        else:
+            result["msg"]= "不存在"
+            result["code"]=10001
+    else:
+        result["msg"] = "用户名或者密码为空"
+        result["code"] = 10002
+    return JsonResponse(result)
+
+# 提供注册页面
+def ajaxregister(request):
+    return render(request,"ajaxregister.html")
+# 处理ajax请求
+def ajaxpost(request):
+    result = {"code": 10000, "msg": ""}
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        if username and password:
+            flag = User.objects.filter(name=username,password=setPassword(password)).first()
+            if flag:
+                result["msg"]="用户已存在"
+                result["code"]=10001
+            else:
+                User.objects.create(name=username,password=setPassword(password))
+                result["msg"]="注册成功"
+        else:
+            result["msg"]="用户名或密码为空"
+            result["code"]=10002
+    return JsonResponse(result)
