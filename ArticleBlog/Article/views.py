@@ -18,17 +18,3 @@ def checkuser(request):
         result = {"code":10002,"msg":"参数为空"}
     return JsonResponse(result)
 
-
-def login(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        if username and password:
-            flag = User.objects.filter(name=username,password=setPassword(password)).first()
-            if flag:
-                return HttpResponse("登录成功")
-            else:
-                return HttpResponse("用户名或密码输入错误")
-        else:
-            return HttpResponse("用户名不存在")
-    return render(request,"login.html")

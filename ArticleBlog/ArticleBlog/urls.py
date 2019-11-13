@@ -40,5 +40,7 @@ urlpatterns = [
     path('ajaxreq/', ajaxreq),
     path('ajaxregister/', ajaxregister),
     path('ajaxpost/', ajaxpost),
+    path('login/', login),
+    path('logout/', logout),
     path('Article/', include("Article.urls")),
 ]

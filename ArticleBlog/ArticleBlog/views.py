@@ -1,11 +1,27 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.shortcuts import render
 from Article.models import *
 from django.core.paginator import Paginator
 
+# 登录验证装饰器
+def LoginValid(func):
+    def inner(request,*arg,**kwargs):
+        # 需要校验用户的  cookie
+        username = request.COOKIES.get("username")
+        username_session = request.session.get("username")
+        print(username_session)
+        print(request.session)
+        if username:
+            return func(request,*arg,**kwargs)
+        else:
+            return HttpResponseRedirect("/login")
+    return inner
+
+@LoginValid
 def about(request):
     return render(request,"about.html")
 
+@LoginValid
 def index(request):
     """
     返回  最新的  6条数据
@@ -15,6 +31,8 @@ def index(request):
     :param request:
     :return:
     """
+    # print(request.COOKIES.get("username"))
+    # print(request.session)
     newarticle = Article.objects.order_by("-date")[:6]
     # 返回图文推荐  7条数据
     recommendArticle = Article.objects.filter(recommend=1)[:7]
@@ -22,10 +40,12 @@ def index(request):
     clickArticle = Article.objects.order_by("-click")[:12]
 
     return render(request,"index.html",locals())
+
+@LoginValid
 def listpic(request):
     return render(request,"listpic.html")
 
-
+@LoginValid
 def newslistpic(request,page=1):
     page = int(page)
     # 查询数据
@@ -171,7 +191,7 @@ def ajaxtest(request):
 def ajaxdemo(request):
     return render(request,"ajaxdemo.html")
 
-from django.http import JsonResponse
+
 # 处理ajax请求
 def ajaxreq(request):
     """
@@ -221,3 +241,31 @@ def ajaxpost(request):
             result["msg"]="用户名或密码为空"
             result["code"]=10002
     return JsonResponse(result)
+
+# 登录页面
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        if username and password:
+            user = User.objects.filter(name=username,password=setPassword(password)).first()
+            if user:
+                # return HttpResponseRedirect('/index')
+                response = HttpResponseRedirect('/index')
+                # 设置cookie
+                response.set_cookie("username",username)
+                request.session["username"] = username
+                return response
+            else:
+                return HttpResponseRedirect('/login')
+        else:
+            return HttpResponse("用户名或者密码为空")
+    return render(request,"login.html")
+
+# 退出登录
+def logout(request):
+    response = HttpResponseRedirect("/login")
+    response.delete_cookie("username")
+    del request.session["username"]
+    return response
+
